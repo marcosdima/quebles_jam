@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://c5vtdmb2elkbp"]
+
+[ext_resource type="Script" uid="uid://48cixdj3f1nv" path="res://tests/utils/nodes/camara_test.gd" id="1_d75tm"]
+
+[node name="Camara" type="Node3D" unique_id=134543377]
+script = ExtResource("1_d75tm")
+metadata/_custom_type_script = "uid://48cixdj3f1nv"
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=210003275]
+transform = Transform3D(0.707107, -0.408248, 0.57735, 0, 0.816497, 0.57735, -0.707107, -0.408248, 0.57735, 0, 3, 0)
+shadow_enabled = true

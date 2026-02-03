@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxv7tphy8q6q4"]
+
+[ext_resource type="Script" uid="uid://t1pj2b7oj5ku" path="res://tests/modules/mouse/mouse_test.gd" id="1_0qko3"]
+
+[node name="MouseTest" type="Node3D"]
+script = ExtResource("1_0qko3")
+metadata/_custom_type_script = "uid://t1pj2b7oj5ku"

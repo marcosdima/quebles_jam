@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://41dkij1tsy30"]
+
+[ext_resource type="Script" uid="uid://dioxw0ewl7i42" path="res://tests/handlers/wasd/wasd_test.gd" id="1_guklx"]
+
+[node name="WasdTest" type="Node3D" unique_id=1210693702]
+script = ExtResource("1_guklx")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1039114299]
+transform = Transform3D(0.707107, -0.408248, 0.57735, 0, 0.816497, 0.57735, -0.707107, -0.408248, 0.57735, 5, 5, 5)
+current = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=340727301]
+transform = Transform3D(0.707107, -0.408248, 0.57735, 0, 0.816497, 0.57735, -0.707107, -0.408248, 0.57735, 0, 3, 0)
+shadow_enabled = true

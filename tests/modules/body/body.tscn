@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bo2velki63pru"]
+
+[ext_resource type="Script" uid="uid://cetyb5pc8sj4p" path="res://tests/modules/body/body_test.gd" id="1_y83cn"]
+
+[node name="BodyTest" type="Node3D" unique_id=70955962]
+script = ExtResource("1_y83cn")
+metadata/_custom_type_script = "uid://cetyb5pc8sj4p"
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=151262746]
+transform = Transform3D(0.707107, -0.408248, 0.57735, 0, 0.816497, 0.57735, -0.707107, -0.408248, 0.57735, 5, 5, 5)
+current = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=998323471]
+transform = Transform3D(0.707107, -0.408248, 0.57735, 0, 0.816497, 0.57735, -0.707107, -0.408248, 0.57735, 0, 3, 0)
+shadow_enabled = true

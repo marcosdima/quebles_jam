@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://dkx7ooefot5gs"]
+
+[ext_resource type="Script" uid="uid://c7m2tbdpkjc2q" path="res://tests/game/character/character_test.gd" id="1_h8m4s"]
+[ext_resource type="Script" uid="uid://djmk3mua8u1lw" path="res://src/entities/character.gd" id="2_h8m4s"]
+[ext_resource type="PackedScene" uid="uid://bqec281cvvd6u" path="res://assets/models/xbot/xbot.tscn" id="3_7cdmw"]
+[ext_resource type="Script" uid="uid://c7oe2dr5gi7lc" path="res://src/utils/nodes/camera.gd" id="4_7cdmw"]
+
+[node name="CharacterTest" type="Node3D" unique_id=1400024181]
+script = ExtResource("1_h8m4s")
+metadata/_custom_type_script = "uid://c7m2tbdpkjc2q"
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2036378277]
+transform = Transform3D(0.707107, -0.408248, 0.57735, 0, 0.816497, 0.57735, -0.707107, -0.408248, 0.57735, 0, 3, 0)
+shadow_enabled = true
+
+[node name="Character" type="Node3D" parent="." unique_id=1182151774]
+script = ExtResource("2_h8m4s")
+model = ExtResource("3_7cdmw")
+metadata/_custom_type_script = "uid://djmk3mua8u1lw"
+
+[node name="Camara3D" type="Camera3D" parent="." unique_id=1663132918]
+script = ExtResource("4_7cdmw")
+metadata/_custom_type_script = "uid://c7oe2dr5gi7lc"

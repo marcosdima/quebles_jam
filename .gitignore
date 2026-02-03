@@ -1,0 +1,10 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Godot UID files
+*.uid
+*.uid.tres
+
+# Godot import files
+*.import    
