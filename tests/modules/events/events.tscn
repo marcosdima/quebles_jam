@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://ndp2h4ocpskt"]
-
-[ext_resource type="Script" uid="uid://dnf3sukv264nk" path="res://tests/modules/events/events_test.gd" id="1_rsh8n"]
-
-[node name="EventsTest" type="Node3D"]
-script = ExtResource("1_rsh8n")

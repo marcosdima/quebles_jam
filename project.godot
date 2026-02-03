@@ -14,7 +14,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 [application]
 
-config/name="base"
+config/name="quebles"
 run/main_scene="uid://ch40b7lsihtcy"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
@@ -25,7 +25,7 @@ gdscript/warnings/unused_signal=0
 
 [dotnet]
 
-project/assembly_name="base"
+project/assembly_name="quebles"
 
 [filesystem]
 
