@@ -1,5 +1,5 @@
 @tool
-extends Modules
+extends Defaults
 class_name Entity
 
 
@@ -16,10 +16,10 @@ static var _count: Array[int] = [0]
 
 var id: int
 var group: Group = Group.DEFAULT
-var db: DebugHandler
+var db: Debug
 
 
-func _init() -> void:
+func _init() -> void:	
 	super()
 	
 	# Set id.
@@ -42,5 +42,5 @@ func _exit_tree() -> void:
 	_count.push_front(id)
 
 
-func debug() -> void:
-	db = DebugHandler.new(self)
+'''func debug() -> void:
+	db = DebugHandler.new(self)'''

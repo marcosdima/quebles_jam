@@ -1,5 +1,5 @@
-extends Module
-class_name ColorsModule
+extends Default
+class_name Colors
 
 
 signal color_changed(new_color: Color)

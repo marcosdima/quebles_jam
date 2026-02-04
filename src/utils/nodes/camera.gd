@@ -18,7 +18,7 @@ func follow(
 		parent.remove_child(self)
 	following = target
 	follow_offset = offset
-	following.body_module.body.add_child(self)
+	following.body.append_child(self)
 	position = follow_offset
 
 

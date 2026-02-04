@@ -20,8 +20,8 @@ var falling = false
 
 func _ready():
 	# Setup body as Kinematic (CharacterBody3D)
-	body_module.set_body(BodyModule.BodyType.Kinematic)
-	body_module.add_collision(CollisionShapes.capsule(0.5, 2.0))
+	body.set_body(Body.BodyType.Kinematic)
+	body.add_collision(CollisionShapes.capsule(0.5, 2.0))
 
 	# Set movment handler.
 	movement = MovementHandler.new(self)
@@ -38,8 +38,8 @@ func _ready():
 func _set_root():
 	# Set entity.
 	root = Entity.new()
-	root.body_module.set_body(BodyModule.BodyType.Static)
-	body_module.body.add_child(root)
+	root.body.set_body(Body.BodyType.Static)
+	body.append_child(root)
 	root.name = "Root"
 
 	root_movement = MovementHandler.new(root)

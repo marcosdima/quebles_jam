@@ -14,8 +14,8 @@ func _ready() -> void:
 	_set_auxiliar_entity()
 
 	# Set floor.
-	floor_entity.body_module.set_body(BodyModule.BodyType.Static)
-	floor_entity.body_module.add_collision(CollisionShapes.box(Vector3(10, 1, 10)))
+	floor_entity.body.set_body(Body.BodyType.Static)
+	floor_entity.body.add_collision(CollisionShapes.box(Vector3(10, 1, 10)))
 	floor_entity.position = Vector3(0, 0, 0)
 
 	# Camara follow character.
@@ -43,10 +43,10 @@ func _set_auxiliar_entity():
 	add_child(aux_entity)
 
 	# Capture mouse.
-	aux_entity.mouse_module.capture_mouse()
-	aux_entity.events.escape_pressed.connect(aux_entity.mouse_module.release_mouse)
-	aux_entity.mouse_module.button_pressed.connect(
+	aux_entity.mouse.capture_mouse()
+	aux_entity.events.escape_pressed.connect(aux_entity.mouse.release_mouse)
+	aux_entity.mouse.button_pressed.connect(
 		func(m: Mouse):
 			if m.is_left_click():
-				aux_entity.mouse_module.capture_mouse()
+				aux_entity.mouse.capture_mouse()
 	)

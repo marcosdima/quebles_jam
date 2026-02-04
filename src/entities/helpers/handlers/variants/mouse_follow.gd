@@ -9,34 +9,24 @@ var follow_x: bool = false
 var follow_y: bool = true
 
 
-func validate_target(target: Entity = null) -> bool:
-	return (
-		super.validate_target(target)
-		and target.mouse_module
-		and target.movement
-		and target.body_module
-		and target.body_module.body
-	)
-
-
 func _init(target: Entity, sens: float = 0.2) -> void:
 	super(target)
 	sensitivity = sens
 
 
 func _on_target_set() -> void:
-	_target.mouse_module.mouse_moved.connect(_process_mouse)
+	_target.mouse.mouse_moved.connect(_process_mouse)
 
 		
 func _process_mouse(mouse):
-	if not _target:
+	if not _target or _target.get('movement') == null:
 		return
 
 	var delta = mouse.relative
 	var yaw = -delta.x * sensitivity
 	var pitch = -delta.y * sensitivity
 
-	var body = _target.body_module.body
+	var body = _target.body.get_body()
 	var r = body.rotation
 
 	if follow_y:
@@ -48,4 +38,4 @@ func _process_mouse(mouse):
 	if follow_z:
 		r.z += deg_to_rad(yaw)
 
-	_target.movement.set_rotation(r.y, r.x, r.z)
+	_target.movement.rotation(r.y, r.x, r.z)

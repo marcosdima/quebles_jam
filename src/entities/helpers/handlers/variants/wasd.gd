@@ -16,19 +16,20 @@ var _direction: Vector3 = Vector3.ZERO
 var angular_speed: float = 8.0
 
 
-func validate_target(target: Entity = null) -> bool:
-	return (
-		super.validate_target(target)
-		and target.body_module
-		and target.body_module.body
-		and target.keys_module
-		and target.movement
-	)
+func validate_target(target: Node3D) -> bool:
+	if not super(target):
+		return false
+	
+	if not (target.body.get_body() is CharacterBody3D):
+		log_error("WASDHandler can only be assigned to Entity nodes with CharacterBody3D.")
+		return false
+
+	return true
 
 
 func _on_target_set():
-	_target.keys_module.key_held.connect(_on_key_held)
-	_target.keys_module.key_released.connect(_on_key_released)
+	_target.keys.key_held.connect(_on_key_held)
+	_target.keys.key_released.connect(_on_key_released)
 
 
 func _on_target_physics_frame(_delta: float):
@@ -44,9 +45,9 @@ func _on_target_physics_frame(_delta: float):
 	# Transform local direction to global using target's Y rotation
 	var direction = _direction
 	if direction != Vector3.ZERO:
-		var basis = body.global_transform.basis
-		var forward = -basis.z.normalized()
-		var right = basis.x.normalized()
+		var gbl_basis = body.global_transform.basis
+		var forward = -gbl_basis.z.normalized()
+		var right = gbl_basis.x.normalized()
 		var move_dir = (forward * direction.z + right * direction.x).normalized()
 		movement_handler.apply_horizontal_movement(move_dir, speed)
 	else:
@@ -61,18 +62,18 @@ func _on_target_physics_frame(_delta: float):
 
 
 func _on_key_held(custom: CustomKey):
-	var name = _key_to_name(custom)
+	var key_name = _key_to_name(custom)
 
-	if DIRS.has(name):
-		_held[name] = true
+	if DIRS.has(key_name):
+		_held[key_name] = true
 		_update_direction()
 
 
 func _on_key_released(custom: CustomKey):
-	var name = _key_to_name(custom)
+	var key_name = _key_to_name(custom)
 
-	if DIRS.has(name):
-		_held.erase(name)
+	if DIRS.has(key_name):
+		_held.erase(key_name)
 		_update_direction()
 
 
@@ -86,11 +87,11 @@ func _update_direction():
 
 
 func _get_body() -> CharacterBody3D:
-	return _target.body_module.body as CharacterBody3D
+	return _target.body.get_body() as CharacterBody3D
 
 
 func _key_to_name(key: CustomKey) -> String:
-	var name = key.get_char().to_lower()
-	if name.is_empty() and key.physical_keycode != 0:
-		name = OS.get_keycode_string(key.physical_keycode).to_lower()
-	return name
+	var key_name = key.get_char().to_lower()
+	if key_name.is_empty() and key.physical_keycode != 0:
+		key_name = OS.get_keycode_string(key.physical_keycode).to_lower()
+	return key_name

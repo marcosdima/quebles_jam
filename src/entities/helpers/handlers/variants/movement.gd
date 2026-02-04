@@ -33,7 +33,7 @@ func set_velocity(velocity: Vector3) -> void:
 	if not can_move():
 		return
 	
-	var body = _target.body_module.body
+	var body = _target.body.get_body()
 	if body is CharacterBody3D:
 		body.velocity = velocity
 	elif body is RigidBody3D:
@@ -46,7 +46,7 @@ func apply_horizontal_movement(direction: Vector3, move_speed: float) -> void:
 	if not can_move():
 		return
 
-	var body = _target.body_module.body
+	var body = _target.body.get_body()
 
 	# Check if direction is zero.
 	var flat = Vector3(direction.x, 0, direction.z)
@@ -67,7 +67,7 @@ func apply_horizontal_movement(direction: Vector3, move_speed: float) -> void:
 
 ## Apply gravity to kinematic bodies.
 func apply_gravity(delta: float, gravity: float = 9.8) -> void:
-	var body = _target.body_module.body
+	var body = _target.body.get_body()
 	if not body:
 		return
 	if body is CharacterBody3D:
@@ -75,7 +75,7 @@ func apply_gravity(delta: float, gravity: float = 9.8) -> void:
 
 
 func get_velocity() -> Vector3:
-	var body = _target.body_module.body
+	var body = _target.body.get_body()
 	if body is CharacterBody3D:
 		return body.velocity
 	elif body is RigidBody3D:
@@ -83,13 +83,12 @@ func get_velocity() -> Vector3:
 	return Vector3.ZERO
 
 
-## Rotation helpers
-func set_rotation(yaw: float, pitch: float, roll: float) -> void:
+func rotation(yaw: float, pitch: float, roll: float) -> void:
 	# Locked movement.
 	if not can_move():
 		return
 
-	var body = _target.body_module.body
+	var body = _target.body.get_body()
 	var r = body.rotation
 	r.y = yaw
 	r.x = pitch
@@ -97,27 +96,28 @@ func set_rotation(yaw: float, pitch: float, roll: float) -> void:
 	body.rotation = r
 
 
-func get_rotation_y() -> float:
-	return _target.body_module.body.rotation.y
+func get_body_rotation() -> Vector3:
+	return _target.body.get_body().rotation
 
 
 func rotate_towards(direction: Vector3, angular_speed: float, delta: float) -> void:
-	# Smoothly rotate the body to face `direction` on the Y axis.
+	if not can_move():
+		return
+
 	if direction.length() == 0:
 		return
 
-	var body = _target.body_module.body
+	var body = _target.body.get_body()
 	var flat = Vector3(direction.x, 0, direction.z)
 
 	if flat.length() == 0:
 		return
 	flat = flat.normalized()
 
-	# target yaw: angle where forward (-Z) aligns with `flat`
 	var target_yaw = atan2(flat.x, -flat.z)
 	var current = body.rotation.y
 	var diff = wrapf(target_yaw - current, -PI, PI)
-	var max_step = angular_speed * delta
+	var max_step = max(angular_speed, 0.0) * delta
 	var step = clamp(diff, -max_step, max_step)
 	var r = body.rotation
 	r.y = current + step
@@ -128,16 +128,11 @@ func get_state() -> int:
 	return _state
 
 
-func validate_target(target: Entity = null) -> bool:
-	return (
-		super.validate_target(target)
-		and target.body_module
-		and target.body_module.body
-	)
-
-
 func _on_target_physics_frame(_delta: float) -> void:
-	var body = _target.body_module.body
+	if entity.body_type == Body.BodyType.Static:
+		return
+		
+	var body = _target.body.get_body()
 	var vel = body.velocity
 	var horizontal_speed = Vector3(vel.x, 0, vel.z).length()
 

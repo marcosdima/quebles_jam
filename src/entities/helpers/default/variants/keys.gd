@@ -1,5 +1,5 @@
-extends Module
-class_name KeysModule
+extends Default
+class_name Keys
 
 
 ## Emitted when a key is pressed.
@@ -17,8 +17,8 @@ var _held_keys: Dictionary = {}
 
 func _on_target_ready() -> void:
 	super()
-	target.set_process_input(true)
-	target.set_process_unhandled_input(true)
+	_target.set_process_input(true)
+	_target.set_process_unhandled_input(true)
 
 
 ## Processes input events. Call this from target's _input or _unhandled_input.

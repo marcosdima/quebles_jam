@@ -1,5 +1,5 @@
-extends Module
-class_name EventsModule
+extends Default
+class_name Events
 
 
 # Letters a-z
@@ -145,42 +145,42 @@ func _on_target_ready():
 	super()
 
 	# Key connect.
-	target.keys_module.key_pressed.connect(
+	_target.keys.key_pressed.connect(
 		func(key):
 			_emit(key, "pressed")
 	)
-	target.keys_module.key_released.connect(
+	_target.keys.key_released.connect(
 		func(key):
 			_emit(key, "released")
 	)
-	target.keys_module.key_held.connect(
+	_target.keys.key_held.connect(
 		func(key):
 			_emit(key, "held")
 	)
 
 
 func _emit(key: CustomKey, event_type: String) -> void:
-	var name = key.get_char().to_lower()
+	var n = key.get_char().to_lower()
 	
-	if name.is_empty() and key.physical_keycode != 0:
-		name = OS.get_keycode_string(key.physical_keycode).to_lower()
+	if n.is_empty() and key.physical_keycode != 0:
+		n = OS.get_keycode_string(key.physical_keycode).to_lower()
 	
-	if name.is_empty():
+	if n.is_empty():
 		return
 	
 	# Map special characters
-	if name == " ":
-		name = "space"
+	if n == " ":
+		n = "space"
 	
 	# Map numbers to word names
 	var number_map = {
 		"0": "zero", "1": "one", "2": "two", "3": "three", "4": "four",
 		"5": "five", "6": "six", "7": "seven", "8": "eight", "9": "nine"
 	}
-	if number_map.has(name):
-		name = number_map[name]
+	if number_map.has(n):
+		n = number_map[n]
 	
-	var signal_name = "%s_%s" % [name, event_type]
+	var signal_name = "%s_%s" % [n, event_type]
 	
 	if has_signal(signal_name):
 		emit_signal(signal_name)

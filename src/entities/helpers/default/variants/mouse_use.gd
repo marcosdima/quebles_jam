@@ -1,5 +1,5 @@
-extends Module
-class_name MouseModule
+extends Default
+class_name MouseUse
 
 
 ## Emitted when a mouse button is pressed.
@@ -20,8 +20,8 @@ var _last_position: Vector2 = Vector2.ZERO
 
 
 func _on_target_ready() -> void:
-	target.set_process_input(true)
-	target.set_process_unhandled_input(true)
+	_target.set_process_input(true)
+	_target.set_process_unhandled_input(true)
 
 
 ## Processes input events. Call this from target's _input or _unhandled_input.
@@ -43,7 +43,7 @@ func process_input(event: InputEvent) -> void:
 
 ## Gets the current mouse position.
 func get_mouse_position() -> Vector2:
-	return target.get_viewport().get_mouse_position()
+	return _target.get_viewport().get_mouse_position()
 
 
 ## Checks if a specific mouse button is currently pressed.

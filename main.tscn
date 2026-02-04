@@ -18,4 +18,5 @@ metadata/_custom_type_script = "uid://dslde0kengspu"
 
 [node name="Floor" type="Node3D" parent="." unique_id=1357927494]
 script = ExtResource("4_lquwl")
+body_type = null
 metadata/_custom_type_script = "uid://rhqlrqr1whet"
