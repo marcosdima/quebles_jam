@@ -1,6 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://ch40b7lsihtcy"]
+[gd_scene format=3 uid="uid://ch40b7lsihtcy"]
 
-[ext_resource type="Script" uid="uid://qjgx315k262c" path="res://main.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://bnkmbfdk42ss3" path="res://main.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://ca6rpnge8duj" path="res://src/utils/nodes/camera.gd" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://dslde0kengspu" path="res://core/character.gd" id="3_1bvp3"]
+[ext_resource type="Script" uid="uid://rhqlrqr1whet" path="res://src/entities/entity.gd" id="4_lquwl"]
 
-[node name="Main" type="Node"]
+[node name="Main" type="Node" unique_id=1946742914]
 script = ExtResource("1_ig7tw")
+
+[node name="Camara3D" type="Camera3D" parent="." unique_id=343686131]
+script = ExtResource("2_0xm2m")
+metadata/_custom_type_script = "uid://ca6rpnge8duj"
+
+[node name="Character" type="Node3D" parent="." unique_id=683035740]
+script = ExtResource("3_1bvp3")
+metadata/_custom_type_script = "uid://dslde0kengspu"
+
+[node name="Floor" type="Node3D" parent="." unique_id=1357927494]
+script = ExtResource("4_lquwl")
+metadata/_custom_type_script = "uid://rhqlrqr1whet"

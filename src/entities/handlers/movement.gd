@@ -84,7 +84,7 @@ func get_velocity() -> Vector3:
 
 
 ## Rotation helpers
-func set_rotation_y(yaw: float) -> void:
+func set_rotation(yaw: float, pitch: float, roll: float) -> void:
 	# Locked movement.
 	if not can_move():
 		return
@@ -92,6 +92,8 @@ func set_rotation_y(yaw: float) -> void:
 	var body = _target.body_module.body
 	var r = body.rotation
 	r.y = yaw
+	r.x = pitch
+	r.z = roll
 	body.rotation = r
 
 

@@ -143,6 +143,8 @@ signal backspace_held
 
 func _on_target_ready():
 	super()
+
+	# Key connect.
 	target.keys_module.key_pressed.connect(
 		func(key):
 			_emit(key, "pressed")
