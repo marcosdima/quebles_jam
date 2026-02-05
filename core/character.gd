@@ -5,12 +5,12 @@ class_name Character
 
 var wasd: WASDHandler
 var mouse_follow: MouseFollowHandler
-var movement: MovementHandler
+var movement: Movement
 
 # Root.
 var root: Entity
 var root_mouse_follow: MouseFollowHandler
-var root_movement: MovementHandler
+var root_movement: Movement
 
 # Movement variables.
 const FALL_LAND_TIME = 3.45
@@ -24,7 +24,7 @@ func _ready():
 	body.add_collision(CollisionShapes.capsule(0.5, 2.0))
 
 	# Set movment handler.
-	movement = MovementHandler.new(self)
+	movement = Movement.new(self)
 
 	# Set WASD handler.
 	wasd = WASDHandler.new(self)
@@ -42,10 +42,14 @@ func _set_root():
 	body.append_child(root)
 	root.name = "Root"
 
-	root_movement = MovementHandler.new(root)
-	
-	# Follow mouse.
+	# Add movement for root so handlers can act on it.
+	root_movement = Movement.new(root)
+
+	# Follow mouse - handler will find both root.mouse and root.movement
 	root_mouse_follow = MouseFollowHandler.new(root)
 	root_mouse_follow.follow_y = false
 	root_mouse_follow.follow_x = true
-	root_mouse_follow.follow_z = true
+	root_mouse_follow.follow_z = false
+	root_mouse_follow.clamp_x = true
+	root_mouse_follow.clamp_x_min = -45.0
+	root_mouse_follow.clamp_x_max = 45.0

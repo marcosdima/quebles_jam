@@ -8,15 +8,14 @@
 [node name="Main" type="Node" unique_id=1946742914]
 script = ExtResource("1_ig7tw")
 
-[node name="Camara3D" type="Camera3D" parent="." unique_id=343686131]
-script = ExtResource("2_0xm2m")
-metadata/_custom_type_script = "uid://ca6rpnge8duj"
-
 [node name="Character" type="Node3D" parent="." unique_id=683035740]
 script = ExtResource("3_1bvp3")
 metadata/_custom_type_script = "uid://dslde0kengspu"
 
 [node name="Floor" type="Node3D" parent="." unique_id=1357927494]
 script = ExtResource("4_lquwl")
-body_type = null
 metadata/_custom_type_script = "uid://rhqlrqr1whet"
+
+[node name="Camara3D" type="Camera3D" parent="." unique_id=892753661]
+script = ExtResource("2_0xm2m")
+metadata/_custom_type_script = "uid://ca6rpnge8duj"

@@ -1,5 +1,5 @@
 extends Handler
-class_name MovementHandler
+class_name Movement
 
 
 # Signals emitted for animation/state handling in Character.
@@ -28,102 +28,40 @@ func lock_movement() -> void: _can_move = false
 func unlock_movement() -> void: _can_move = true
 
 
-## Apply velocity to the body (works for CharacterBody3D and RigidBody3D)
+## Apply velocity to the body.
 func set_velocity(velocity: Vector3) -> void:
 	if not can_move():
 		return
-	
-	var body = _target.body.get_body()
-	if body is CharacterBody3D:
-		body.velocity = velocity
-	elif body is RigidBody3D:
-		body.linear_velocity = velocity
+	_target.body.set_velocity(velocity)
 
 
 ## Apply horizontal movement respecting body type.
 func apply_horizontal_movement(direction: Vector3, move_speed: float) -> void:
-	# Locked movement.
 	if not can_move():
 		return
-
-	var body = _target.body.get_body()
-
-	# Check if direction is zero.
-	var flat = Vector3(direction.x, 0, direction.z)
-	if flat == Vector3.ZERO:
-		return
-
-	# Normalize and apply movement.
-	flat = flat.normalized()
-	if body is CharacterBody3D:
-		body.velocity.x = flat.x * move_speed
-		body.velocity.z = flat.z * move_speed
-	elif body is RigidBody3D:
-		var target_vel = flat * move_speed
-		var current = Vector3(body.linear_velocity.x, 0, body.linear_velocity.z)
-		var force = (target_vel - current) * body.mass * 10.0
-		body.apply_central_force(force)
+	_target.body.apply_horizontal_movement(direction, move_speed)
 
 
 ## Apply gravity to kinematic bodies.
 func apply_gravity(delta: float, gravity: float = 9.8) -> void:
-	var body = _target.body.get_body()
-	if not body:
-		return
-	if body is CharacterBody3D:
-		body.velocity.y -= gravity * delta
+	_target.body.apply_gravity(delta, gravity)
 
 
-func get_velocity() -> Vector3:
-	var body = _target.body.get_body()
-	if body is CharacterBody3D:
-		return body.velocity
-	elif body is RigidBody3D:
-		return body.linear_velocity
-	return Vector3.ZERO
-
-
+## Apply rotation to the body.
 func rotation(yaw: float, pitch: float, roll: float) -> void:
-	# Locked movement.
 	if not can_move():
 		return
-
-	var body = _target.body.get_body()
-	var r = body.rotation
-	r.y = yaw
-	r.x = pitch
-	r.z = roll
-	body.rotation = r
+	_target.body.rotation(yaw, pitch, roll)
 
 
-func get_body_rotation() -> Vector3:
-	return _target.body.get_body().rotation
-
-
+## Rotate the body towards a direction.
 func rotate_towards(direction: Vector3, angular_speed: float, delta: float) -> void:
 	if not can_move():
 		return
-
-	if direction.length() == 0:
-		return
-
-	var body = _target.body.get_body()
-	var flat = Vector3(direction.x, 0, direction.z)
-
-	if flat.length() == 0:
-		return
-	flat = flat.normalized()
-
-	var target_yaw = atan2(flat.x, -flat.z)
-	var current = body.rotation.y
-	var diff = wrapf(target_yaw - current, -PI, PI)
-	var max_step = max(angular_speed, 0.0) * delta
-	var step = clamp(diff, -max_step, max_step)
-	var r = body.rotation
-	r.y = current + step
-	body.rotation = r
+	_target.body.rotate_towards(direction, angular_speed, delta)
 
 
+## State getter.
 func get_state() -> int:
 	return _state
 
@@ -131,9 +69,8 @@ func get_state() -> int:
 func _on_target_physics_frame(_delta: float) -> void:
 	if entity.body_type == Body.BodyType.Static:
 		return
-		
-	var body = _target.body.get_body()
-	var vel = body.velocity
+	
+	var vel = _target.body.get_velocity()
 	var horizontal_speed = Vector3(vel.x, 0, vel.z).length()
 
 	# Determine next state based on velocity.
@@ -163,3 +100,15 @@ func _on_target_physics_frame(_delta: float) -> void:
 				else:
 					idle.emit()
 		_state = next_state
+
+
+func validate_target(target: Node3D) -> bool:
+	if not super(target):
+		return false
+
+	## TODO: Error logs trigger invalidation.
+	if not target.get('body'):
+		log_error("Target entity lacks 'body' member required by Movement.")
+		return false
+
+	return true
